@@ -17,6 +17,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+    private static final String SECRET_KEY = "s3cr3taslfkjasasjasdfjhsajflkjhasdsaufhksajdhfsiufha";
+
     @PostMapping("/login")
     public Map<String, String> login(@RequestBody Map<String, String> loginRequest){
         String username = loginRequest.get("username");
