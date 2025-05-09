@@ -1,6 +1,7 @@
 package saul.com.task2.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import saul.com.task2.entity.UserEntity;
 import saul.com.task2.service.UserService;
@@ -17,11 +18,13 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
     public List<UserEntity> getUsers(){
         return userService.getUsers();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<UserEntity> getUserById(@PathVariable Long id){
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
@@ -29,11 +32,13 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user){
         return ResponseEntity.ok(userService.createUser(user));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @RequestBody UserEntity user){
         try{
             return ResponseEntity.ok(userService.updateUser(id, user));
@@ -43,6 +48,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
