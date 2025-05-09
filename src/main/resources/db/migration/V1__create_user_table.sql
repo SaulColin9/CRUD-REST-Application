@@ -1,0 +1,5 @@
+CREATE TABLE userEntity (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL
+);
